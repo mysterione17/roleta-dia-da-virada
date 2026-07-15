@@ -46,50 +46,62 @@ window.ROLETA_CONFIG = {
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root{
-  /* ── CORES DA MARCA — extraídas de midasdaeducacao.com.br/aviradacoordenacao (tema claro) ── */
+  /* ── CORES — amostradas do hero real do site (print 14/07/2026) ── */
   --gold:#FFB600; --gold-dk:#B67F00; --gold-lt:#FFD466;
-  --gold-ink:#C9931B;                 /* dourado p/ texto sobre fundo claro */
-  --card:#F5F5F5; --ink:#242424; --navy:#222A35;
+  --gold-ink:#C9900E;                 /* dourado dos textos em negrito */
+  --cream:#F2DDA3;                    /* pill "AO VIVO" */
+  --card:#FFFFFF; --ink:#1C2333; --navy:#1C2333;
   --green:#22CB5F;
-  --bg:#FFFFFF;
-  --border:rgba(0,0,0,0.12);
-  --text:#1A1A1A; --muted:rgba(0,0,0,0.62);
+  --bg:#F4F5F7;
+  --border:rgba(28,35,51,0.14);
+  --text:#1C2333; --muted:rgba(28,35,51,0.72);
   --radius:14px;
 }
 html{ scroll-behavior:smooth; }
 body{
-  background:
-    radial-gradient(ellipse 90% 40% at 50% -6%, rgba(255,182,0,0.10), rgba(255,182,0,0) 62%),
-    var(--bg);
+  background:var(--bg);
   color:var(--text); font-family:'Roboto',sans-serif; line-height:1.55;
   -webkit-font-smoothing:antialiased; min-height:100vh;
   display:flex; flex-direction:column; align-items:center;
   padding:26px 18px 0; overflow-x:hidden;
 }
-.topbar{ margin-bottom:6px; text-align:center; }
-.topbar .foto{ width:200px; height:auto; display:block; margin:0 auto; }
-.topbar .logo{ width:190px; height:auto; display:block; margin:2px auto 0; }
+/* foto da Marcelia encostada na borda direita, como no site */
+.foto-lateral{
+  position:absolute; top:110px; right:0; z-index:0; pointer-events:none;
+  width:clamp(220px,24vw,360px);
+}
+.foto-lateral img{ width:100%; height:auto; display:block; mix-blend-mode:multiply; }
+@media (max-width:1100px){ .foto-lateral{ display:none; } }
+.topbar{ margin-bottom:4px; text-align:center; position:relative; z-index:1; }
+.topbar .logo{ width:230px; height:auto; display:block; margin:0 auto; }
+.pill-vivo{
+  display:inline-block; margin-top:14px; background:var(--cream); color:var(--ink);
+  border-radius:999px; font-size:15px; font-weight:400; padding:4px 24px;
+}
 .badge-data{
-  display:inline-block; margin-top:10px; background:var(--navy); color:#FFFFFF;
-  border-radius:6px;
-  font-size:13px; font-weight:700; padding:6px 14px; letter-spacing:0.02em;
+  display:block; width:fit-content; margin:10px auto 0; background:var(--navy); color:#FFFFFF;
+  font-size:16px; font-weight:700; padding:5px 26px; letter-spacing:0.01em;
 }
-.badge-data b{ color:var(--gold); }
-.hero{ text-align:center; max-width:640px; margin-top:16px; }
+.hero{ text-align:center; max-width:700px; margin-top:26px; position:relative; z-index:1; }
 .hero h1{
-  font-family:'Roboto',sans-serif; font-weight:900; letter-spacing:-0.01em;
-  font-size:clamp(24px,5.2vw,36px); line-height:1.22; color:var(--text);
+  font-family:'Roboto',sans-serif; font-weight:400; letter-spacing:0;
+  font-size:clamp(21px,3.6vw,29px); line-height:1.4; color:var(--text);
 }
-.hero h1 em{ font-style:normal; color:var(--gold-ink); }
-.hero p{ color:var(--muted); font-weight:400; font-size:clamp(14px,2.4vw,16px); margin-top:12px; }
-.hero p strong{ color:var(--gold-ink); font-weight:700; }
+.hero h1 strong{ font-weight:700; color:var(--gold-ink); }
+.checklist{ list-style:none; margin-top:18px; font-size:clamp(15px,2.4vw,18px); color:var(--text); }
+.checklist li{ margin-top:8px; }
+.checklist .check{ color:var(--gold-ink); font-weight:700; margin-right:8px; }
+.roleta-chamada{
+  margin-top:34px; text-align:center; position:relative; z-index:1;
+  font-size:clamp(15px,2.6vw,19px); font-weight:700; color:var(--gold-ink);
+  text-transform:uppercase; letter-spacing:0.04em;
+}
 .chances{
   position:relative; z-index:5;
-  display:inline-flex; align-items:center; gap:8px; margin-top:18px;
+  display:inline-flex; align-items:center; gap:8px; margin-top:14px;
   font-size:13px; font-weight:700; color:var(--gold-ink);
-  background:#FFF6DF; border:1px solid rgba(255,182,0,0.55);
-  border-radius:999px; padding:8px 16px;
-  box-shadow:0 2px 8px rgba(0,0,0,0.08);
+  background:var(--cream); border:none;
+  border-radius:999px; padding:8px 20px;
 }
 
 /* ── ROLETA ── */
@@ -224,17 +236,25 @@ body{
   height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <!-- End Google Tag Manager (noscript) -->
 
+  <div class="foto-lateral"><img src="assets/marcelia-corpo.jpeg" alt="" aria-hidden="true"></div>
+
   <div class="topbar">
-    <img class="foto" src="assets/foto-marcelia.png" alt="Marcelia Fernandes">
     <img class="logo" src="assets/logo-dia-da-virada.png" alt="Dia da Virada da Coordenação Pedagógica">
-    <div><span class="badge-data">Dia <b>25 de Julho</b> das <b>09h às 17h</b></span></div>
+    <div><span class="pill-vivo">• AO VIVO - com opção de gravação na íntegra</span></div>
+    <div class="badge-data">Dia 25 de Julho | das 09h às 17h</div>
   </div>
 
   <header class="hero">
-    <h1>Domine o seu <em>real papel</em> na Coordenação Pedagógica nesse segundo semestre <em>(com premiação no seu ingresso)</em></h1>
-    <p>Em apenas 1 dia, domine o seu real papel, saia com a sua <strong>rotina pronta</strong> e <strong>roteiros completos</strong> para falar com segurança mesmo frente à resistência.</p>
-    <div class="chances"><span id="chances-txt">Você tem 1 chance. Gire agora.</span></div>
+    <h1>Em apenas 1 dia, <strong>domine o seu real papel, saia com a sua rotina pronta e roteiros completos para falar com segurança</strong> mesmo frente à resistência.</h1>
+    <ul class="checklist">
+      <li><span class="check">✔</span>Não leve para casa mais trabalho nem estresse;</li>
+      <li><span class="check">✔</span>Solicitar, orientar e cobrar professores com total segurança;</li>
+      <li><span class="check">✔</span>Ser respeitada mesmo diante da resistência.</li>
+    </ul>
   </header>
+
+  <div class="roleta-chamada">Gire a roleta e garanta a premiação no seu ingresso</div>
+  <div class="chances"><span id="chances-txt">Você tem 1 chance. Gire agora.</span></div>
 
   <div class="wheel-stage">
     <div class="glow"></div>
