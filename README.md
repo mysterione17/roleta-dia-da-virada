@@ -34,4 +34,13 @@ Material de referência (screenshots, computed styles, assets originais): `refer
 
 - **FB_PIXEL_ID** vazio — confirmar se a Marcelia usa Meta Pixel além do GTM.
 - **Data do evento**: hardcoded "25 de Julho das 09h às 17h" (copiada do site atual).
-- **Deploy**: sem repositório remoto/domínio definidos ainda.
+
+## Deploy
+
+- Repo: https://github.com/mysterione17/roleta-dia-da-virada (público — fonte é o
+  `index.html` legível; o publicado é o `docs/` minificado gerado por `bash build.sh`).
+- GitHub Pages servindo `main:/docs`, domínio `roleta.midasdaeducacao.com.br` (docs/CNAME).
+- DNS: criar CNAME `roleta` → `mysterione17.github.io` na zona de midasdaeducacao.com.br
+  (mesmo padrão de evento.gabrielafachini.com.br). Depois de propagar, ativar
+  "Enforce HTTPS" (GitHub emite o certificado sozinho).
+- Fluxo de publicação: editar `index.html` → `bash build.sh` → commit + push.
