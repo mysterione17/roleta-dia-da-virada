@@ -43,6 +43,20 @@ window.ROLETA_CONFIG = {
 };
 </script>
 
+<!-- Google Tag Manager (no head, como manda o snippet oficial — usa o GTM_ID do config acima) -->
+<script>
+(function(){
+  var id = window.ROLETA_CONFIG.GTM_ID;
+  if (!id) return;
+  (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer',id);
+})();
+</script>
+<!-- End Google Tag Manager -->
+
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root{
@@ -312,12 +326,7 @@ body{
       (window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
       fbq('init', CFG.FB_PIXEL_ID); fbq('track','PageView');
     }
-    if (CFG.GTM_ID){
-      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});
-      var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';
-      j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
-      f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer',CFG.GTM_ID);
-    }
+    // GTM é carregado no <head> (ver snippet logo após o config) — não repetir aqui.
     if (CFG.GA4_ID){
       var gtagScript = document.createElement('script');
       gtagScript.async = true;
