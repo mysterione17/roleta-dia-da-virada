@@ -15,35 +15,31 @@
      CONFIG — tudo que muda por cliente está aqui.
      Ver REPLICAR.md (no projeto da Gabriela) para o passo a passo.
 
-     ⚠️ PLACEHOLDERS — confirmar com a Marcelia:
-       - FB_PIXEL_ID / GA4_ID (tracking dela)
-       - PREMIOS: labels, pesos e links de WhatsApp reais
-       - número do WhatsApp (wa.me/55...)
+     ⚠️ Pendente: FB_PIXEL_ID (Meta Pixel da Marcelia, se houver).
+     Pesos/ranks abaixo são sugestão — o melhor prêmio (R$1) cai menos.
      ════════════════════════════════════════════════ -->
 <script>
 window.ROLETA_CONFIG = {
-  FB_PIXEL_ID: '',   // Meta Pixel da Marcelia (pendente)
-  GTM_ID:      '',
-  GA4_ID:      '',   // GA4 da Marcelia (pendente)
+  FB_PIXEL_ID: '',              // Meta Pixel da Marcelia (pendente)
+  GTM_ID:      'GTM-KQW3T4J9',  // Google Tag Manager da Marcelia
+  GA4_ID:      '',
 
   TENTATIVAS: 1,
 
   // peso = chance relativa de cair | rank = atratividade (mantém o melhor prêmio entre as tentativas)
   // label = texto completo (modal de resultado) | gomoLabel = versão curta no gomo (opcional)
-  // checkout = link do prêmio (WhatsApp com mensagem pronta)
+  // checkout = link do prêmio (checkout Hotmart; as UTMs do anúncio são repassadas automaticamente)
   PREMIOS: {
-    ingresso14: { label: 'INGRESSO POR R$ 14', peso: 40, rank: 1,
-                  checkout: 'https://wa.me/5500000000000?text=Oii%2C%20girei%20a%20roleta%20do%20Dia%20da%20Virada%20e%20quero%20meu%20ingresso%20por%20R%2414!' },
-    kitGratis:  { label: 'KIT COORDENAÇÃO GRÁTIS', gomoLabel: 'KIT GRÁTIS', peso: 30, rank: 2,
-                  checkout: 'https://wa.me/5500000000000?text=Oii%2C%20girei%20a%20roleta%20do%20Dia%20da%20Virada%20e%20ganhei%20o%20Kit%20Coordena%C3%A7%C3%A3o%20gr%C3%A1tis!' },
-    meiaEntrada:{ label: 'INGRESSO COM 50% OFF', gomoLabel: '50% OFF', peso: 20, rank: 3,
-                  checkout: 'https://wa.me/5500000000000?text=Oii%2C%20girei%20a%20roleta%20do%20Dia%20da%20Virada%20e%20ganhei%2050%25%20de%20desconto%20no%20ingresso!' },
-    combo:      { label: 'INGRESSO + KIT POR R$ 14', gomoLabel: 'INGRESSO + KIT', peso: 10, rank: 4,
-                  checkout: 'https://wa.me/5500000000000?text=Oii%2C%20girei%20a%20roleta%20do%20Dia%20da%20Virada%20e%20quero%20ingresso%20%2B%20kit%20por%20R%2414!' }
+    cinquentaOff: { label: 'INGRESSO COM 50% DE DESCONTO', gomoLabel: '50% OFF', peso: 45, rank: 1,
+                    checkout: 'https://pay.hotmart.com/Y106465997B?off=1u4rmlqj&checkoutMode=10' },
+    doisPorUm:    { label: 'INGRESSO 2 POR 1', gomoLabel: '2 POR 1', peso: 35, rank: 2,
+                    checkout: 'https://pay.hotmart.com/Y106465997B?off=wvi454o7&checkoutMode=10' },
+    umReal:       { label: 'INGRESSO POR R$ 1', gomoLabel: 'INGRESSO R$ 1', peso: 20, rank: 3,
+                    checkout: 'https://pay.hotmart.com/Y106465997B?off=ydruh3h5&checkoutMode=10' }
   },
 
-  // 8 gomos = 4 prêmios alternados (mantenha sempre N par, com cada prêmio repetido ao menos 2x e intercalado)
-  GOMOS: ['ingresso14','meiaEntrada','kitGratis','combo','ingresso14','meiaEntrada','kitGratis','combo']
+  // 6 gomos = 3 prêmios alternados (mantenha sempre N par, com cada prêmio repetido ao menos 2x e intercalado)
+  GOMOS: ['cinquentaOff','doisPorUm','umReal','cinquentaOff','doisPorUm','umReal']
 };
 </script>
 
@@ -147,6 +143,26 @@ body{
 
 .footnote{ margin-top:22px; font-size:12px; color:var(--muted); text-align:center; max-width:420px; }
 
+/* ── QUEM TE ENSINA (foto sobre fundo dourado, como no site) ── */
+.mentora-sec{
+  margin:38px auto 0; width:min(92vw,560px);
+  background:var(--card); border:2px solid var(--gold); border-radius:18px;
+  padding:26px 24px; display:flex; gap:22px; align-items:center; text-align:left;
+}
+.mentora-sec .foto-wrap{
+  flex:0 0 40%; max-width:210px; border-radius:12px; overflow:hidden;
+  background:linear-gradient(160deg, var(--gold-lt), var(--gold) 55%, var(--gold-dk));
+}
+.mentora-sec .foto-wrap img{ width:100%; height:auto; display:block; }
+.mentora-sec .eyebrow{ font-size:11px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:var(--gold); }
+.mentora-sec h3{ font-family:'Roboto',sans-serif; font-weight:900; font-size:clamp(18px,3.6vw,22px); margin:6px 0 8px; color:#FFFFFF; }
+.mentora-sec p{ color:var(--muted); font-size:14px; }
+.mentora-sec p strong{ color:var(--gold); font-weight:700; }
+@media (max-width:560px){
+  .mentora-sec{ flex-direction:column; text-align:center; }
+  .mentora-sec .foto-wrap{ flex-basis:auto; width:60%; }
+}
+
 /* ── FAIXA DO EVENTO (mesmo estilo do box escuro com borda dourada do site) ── */
 .evento-sec{
   margin:38px auto 0; width:min(92vw,560px); text-align:center;
@@ -221,6 +237,10 @@ body{
 </style>
 </head>
 <body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KQW3T4J9"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
 
   <div class="topbar">
     <img class="foto" src="assets/foto-marcelia.png" alt="Marcelia Fernandes">
@@ -229,8 +249,8 @@ body{
   </div>
 
   <header class="hero">
-    <h1>Gire a roleta e garanta uma <em>condição exclusiva</em> na sua vaga</h1>
-    <p>Sua chance de viver o <strong>Dia da Virada da Coordenação Pedagógica</strong> com uma condição especial. Gire agora e descubra seu prêmio.</p>
+    <h1>Domine o seu <em>real papel</em> na Coordenação Pedagógica nesse segundo semestre <em>(com premiação no seu ingresso)</em></h1>
+    <p>Em apenas 1 dia, domine o seu real papel, saia com a sua <strong>rotina pronta</strong> e <strong>roteiros completos</strong> para falar com segurança mesmo frente à resistência.</p>
     <div class="chances"><span id="chances-txt">Você tem 1 chance. Gire agora.</span></div>
   </header>
 
@@ -244,6 +264,15 @@ body{
   <button class="btn-spin" id="btn-spin">GIRAR AGORA (<span id="left">1</span> tentativa)</button>
 
   <p class="footnote">Os prêmios são condições promocionais por tempo limitado e válidos apenas durante esta ação. Vagas e preços sujeitos à disponibilidade.</p>
+
+  <section class="mentora-sec">
+    <div class="foto-wrap"><img src="assets/marcelia-corpo.jpeg" alt="Marcelia Fernandes"></div>
+    <div>
+      <span class="eyebrow">Quem te ensina</span>
+      <h3>Marcelia Fernandes</h3>
+      <p>Em <strong>21 anos formando coordenadoras</strong>, Marcelia identificou o que separa a coordenadora sobrecarregada da coordenadora respeitada e transformou isso num <strong>método reconhecido pelo MEC</strong>.</p>
+    </div>
+  </section>
 
   <section class="evento-sec">
     <span class="eyebrow">Imersão ao vivo · Webinar online</span>
@@ -263,8 +292,8 @@ body{
       <h3>Parabéns, você ganhou!</h3>
       <p>Garanta agora antes que sua condição expire.</p>
 
-      <!-- prêmio de preço fixo: link único -->
-      <a class="btn-claim" id="btn-claim" href="#" hidden>RESGATAR MEU PRÊMIO</a>
+      <!-- prêmio de preço fixo: link único (checkout Hotmart) -->
+      <a class="btn-claim" id="btn-claim" href="#" hidden>GARANTIR MEU INGRESSO</a>
 
       <!-- prêmio com preço diferente para aluna/não aluna: pergunta antes do link (não usado nesta campanha) -->
       <div class="aluna-choice" id="aluna-choice" hidden>
@@ -522,12 +551,20 @@ body{
     track('SpinResult', { premio: melhor.key, label: prm.label });
   }
 
-  // ── 5. Destino: mantém o sck do prêmio e repassa só os UTMs do anúncio ──
+  // ── 5. Destino: repassa as UTMs e o src do anúncio para o checkout ──
+  // A página recebe do anúncio: utm_source={{site_source_name}}&utm_medium={{adset.name}}&
+  // utm_campaign={{campaign.name}}&utm_content={{ad.name}}&utm_term={{placement}}&
+  // src={{site_source_name}}|{{campaign.name}}|{{adset.name}}|{{ad.name}}|{{placement}}
+  var PARAMS_REPASSE = ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','src'];
   function montarDestino(base){
     if (!base) return '#';
     var inc = new URLSearchParams(window.location.search);
-    inc.delete('sck'); inc.delete('src');
-    var extra = inc.toString();
+    var out = new URLSearchParams();
+    PARAMS_REPASSE.forEach(function(p){
+      var v = inc.get(p);
+      if (v !== null && v !== '') out.set(p, v);
+    });
+    var extra = out.toString();
     if (!extra) return base;
     return base + (base.indexOf('?') >= 0 ? '&' : '?') + extra;
   }
