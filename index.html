@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gire a roleta e garanta sua condição especial — Dia da Virada da Coordenação</title>
+<meta name="description" content="Gire a roleta e garanta uma condição especial no Dia da Virada da Coordenação Pedagógica, com Marcelia Fernandes (Midas da Educação).">
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" type="image/png" href="assets/logo-dia-da-virada.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&family=Open+Sans:wght@400;600;700&family=DM+Sans:wght@400;700;800&display=swap" rel="stylesheet">
+
+<!-- ════════════════════════════════════════════════
+     CONFIG — tudo que muda por cliente está aqui.
+     Ver REPLICAR.md (no projeto da Gabriela) para o passo a passo.
+
+     ⚠️ PLACEHOLDERS — confirmar com a Marcelia:
+       - FB_PIXEL_ID / GA4_ID (tracking dela)
+       - PREMIOS: labels, pesos e links de WhatsApp reais
+       - número do WhatsApp (wa.me/55...)
+     ════════════════════════════════════════════════ -->
+<script>
+window.ROLETA_CONFIG = {
+  FB_PIXEL_ID: '',   // Meta Pixel da Marcelia (pendente)
+  GTM_ID:      '',
+  GA4_ID:      '',   // GA4 da Marcelia (pendente)
+
+  TENTATIVAS: 1,
+
+  // peso = chance relativa de cair | rank = atratividade (mantém o melhor prêmio entre as tentativas)
+  // label = texto completo (modal de resultado) | gomoLabel = versão curta no gomo (opcional)
+  // checkout = link do prêmio (WhatsApp com mensagem pronta)
+  PREMIOS: {
+    ingresso14: { label: 'INGRESSO POR R$ 14', peso: 40, rank: 1,
+                  checkout: 'https://wa.me/5500000000000?text=Oii%2C%20girei%20a%20roleta%20do%20Dia%20da%20Virada%20e%20quero%20meu%20ingresso%20por%20R%2414!' },
+    kitGratis:  { label: 'KIT COORDENAÇÃO GRÁTIS', gomoLabel: 'KIT GRÁTIS', peso: 30, rank: 2,
+                  checkout: 'https://wa.me/5500000000000?text=Oii%2C%20girei%20a%20roleta%20do%20Dia%20da%20Virada%20e%20ganhei%20o%20Kit%20Coordena%C3%A7%C3%A3o%20gr%C3%A1tis!' },
+    meiaEntrada:{ label: 'INGRESSO COM 50% OFF', gomoLabel: '50% OFF', peso: 20, rank: 3,
+                  checkout: 'https://wa.me/5500000000000?text=Oii%2C%20girei%20a%20roleta%20do%20Dia%20da%20Virada%20e%20ganhei%2050%25%20de%20desconto%20no%20ingresso!' },
+    combo:      { label: 'INGRESSO + KIT POR R$ 14', gomoLabel: 'INGRESSO + KIT', peso: 10, rank: 4,
+                  checkout: 'https://wa.me/5500000000000?text=Oii%2C%20girei%20a%20roleta%20do%20Dia%20da%20Virada%20e%20quero%20ingresso%20%2B%20kit%20por%20R%2414!' }
+  },
+
+  // 8 gomos = 4 prêmios alternados (mantenha sempre N par, com cada prêmio repetido ao menos 2x e intercalado)
+  GOMOS: ['ingresso14','meiaEntrada','kitGratis','combo','ingresso14','meiaEntrada','kitGratis','combo']
+};
+</script>
+
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root{
+  /* ── CORES DA MARCA — extraídas de midasdaeducacao.com.br/aviradacoordenacao ── */
+  --gold:#FFB600; --gold-dk:#B67F00; --gold-lt:#FFD466;
+  --black:#000000; --card:#171717; --ink:#242424;
+  --green:#22CB5F;
+  --bg:#0B0B0B;
+  --border:rgba(255,255,255,0.14);
+  --text:#FFFFFF; --muted:rgba(255,255,255,0.65);
+  --radius:14px;
+}
+html{ scroll-behavior:smooth; }
+body{
+  background:
+    radial-gradient(ellipse 90% 46% at 50% -6%, rgba(255,182,0,0.20), rgba(255,182,0,0) 62%),
+    var(--bg);
+  color:var(--text); font-family:'Roboto',sans-serif; line-height:1.55;
+  -webkit-font-smoothing:antialiased; min-height:100vh;
+  display:flex; flex-direction:column; align-items:center;
+  padding:26px 18px 0; overflow-x:hidden;
+}
+.topbar{ margin-bottom:6px; text-align:center; }
+.topbar .foto{ width:200px; height:auto; display:block; margin:0 auto; }
+.topbar .logo{ width:190px; height:auto; display:block; margin:2px auto 0;
+  filter:drop-shadow(0 2px 6px rgba(0,0,0,0.6)); }
+.badge-data{
+  display:inline-block; margin-top:10px; background:var(--card); color:var(--text);
+  border:1px solid rgba(255,182,0,0.45); border-radius:6px;
+  font-size:13px; font-weight:700; padding:6px 14px; letter-spacing:0.02em;
+}
+.badge-data b{ color:var(--gold); }
+.hero{ text-align:center; max-width:640px; margin-top:16px; }
+.hero h1{
+  font-family:'Roboto',sans-serif; font-weight:900; letter-spacing:-0.01em;
+  font-size:clamp(24px,5.2vw,36px); line-height:1.22; color:var(--text);
+}
+.hero h1 em{ font-style:normal; color:var(--gold); }
+.hero p{ color:var(--muted); font-weight:400; font-size:clamp(14px,2.4vw,16px); margin-top:12px; }
+.hero p strong{ color:var(--gold); font-weight:700; }
+.chances{
+  position:relative; z-index:5;
+  display:inline-flex; align-items:center; gap:8px; margin-top:18px;
+  font-size:13px; font-weight:700; color:var(--gold);
+  background:var(--card); border:1px solid rgba(255,182,0,0.4);
+  border-radius:999px; padding:8px 16px;
+  box-shadow:0 2px 8px rgba(0,0,0,0.35);
+}
+
+/* ── ROLETA ── */
+.wheel-stage{ position:relative; width:min(94vw,460px); aspect-ratio:1; margin:38px auto 10px;
+  display:flex; align-items:center; justify-content:center; }
+.glow{
+  position:absolute; inset:-20%; z-index:0; border-radius:50%; pointer-events:none;
+  background: radial-gradient(circle at 50% 50%,
+    rgba(255,182,0,0.34) 0%, rgba(255,182,0,0.16) 48%, rgba(255,182,0,0.05) 66%, rgba(255,182,0,0) 78%);
+  filter: blur(26px);
+}
+.pointer{
+  position:absolute; top:-10px; left:50%; transform:translateX(-50%); z-index:6;
+  width:0; height:0; border-left:17px solid transparent; border-right:17px solid transparent;
+  border-top:30px solid var(--ink); filter:drop-shadow(0 3px 4px rgba(0,0,0,0.55));
+}
+.pointer::after{
+  content:''; position:absolute; top:-30px; left:-12px;
+  width:0; height:0; border-left:12px solid transparent; border-right:12px solid transparent;
+  border-top:22px solid var(--gold);
+}
+.wheel{
+  position:relative; z-index:1; width:100%; height:100%; display:block; border-radius:50%;
+  transform:rotate(0deg);
+  transition:transform 5.2s cubic-bezier(.17,.67,.18,1);
+  filter: drop-shadow(0 16px 34px rgba(0,0,0,0.55));
+}
+.wheel.no-anim{ transition:none; }
+.hub{
+  position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); z-index:5;
+  width:86px; height:86px; border-radius:50%;
+  background:radial-gradient(circle at 38% 32%, #FFFDF4, #FFE9AE 58%, #FFB600 100%);
+  border:3px solid var(--ink);
+  box-shadow:0 4px 14px rgba(0,0,0,0.5), inset 0 1px 3px rgba(255,255,255,0.7);
+  display:flex; align-items:center; justify-content:center;
+}
+.hub img{ width:66px; height:auto; display:block; }
+
+/* ── BOTÃO GIRAR (verde, igual ao CTA "GARANTIR INGRESSO" do site) ── */
+.btn-spin{
+  margin-top:26px; min-width:min(86vw,380px);
+  background:var(--green); color:#FFFFFF;
+  border:none; border-radius:var(--radius); padding:17px 26px;
+  font-family:'Open Sans',sans-serif; font-size:17px; font-weight:700; letter-spacing:0.01em;
+  cursor:pointer; transition:transform .08s, box-shadow .2s, opacity .2s;
+  box-shadow:0 10px 26px rgba(34,203,95,0.35);
+}
+.btn-spin:hover{ box-shadow:0 12px 30px rgba(34,203,95,0.5); }
+.btn-spin:active{ transform:scale(0.985); }
+.btn-spin:disabled{ opacity:0.5; cursor:not-allowed; box-shadow:none; }
+
+.footnote{ margin-top:22px; font-size:12px; color:var(--muted); text-align:center; max-width:420px; }
+
+/* ── FAIXA DO EVENTO (mesmo estilo do box escuro com borda dourada do site) ── */
+.evento-sec{
+  margin:38px auto 0; width:min(92vw,560px); text-align:center;
+  background:var(--card); border:2px solid var(--gold); border-radius:18px;
+  padding:26px 24px;
+}
+.evento-sec .eyebrow{ font-size:11px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:var(--gold); }
+.evento-sec h3{ font-family:'Roboto',sans-serif; font-weight:700; font-size:clamp(16px,3.4vw,20px); margin:8px 0 6px; color:#FFFFFF; }
+.evento-sec p{ color:var(--muted); font-size:14px; }
+.btn-info{
+  display:inline-block; margin-top:18px; text-decoration:none;
+  background:var(--gold); color:var(--ink); border-radius:6px;
+  padding:15px 30px; font-family:'Open Sans',sans-serif; font-size:15px; font-weight:700;
+  box-shadow:0 10px 26px rgba(255,182,0,0.28); transition:transform .08s, box-shadow .2s;
+}
+.btn-info:hover{ box-shadow:0 12px 30px rgba(255,182,0,0.45); }
+.btn-info:active{ transform:scale(0.985); }
+
+/* ── RODAPÉ (faixa dourada, igual ao site) ── */
+.footer{
+  margin-top:44px; width:100vw; background:var(--gold); color:var(--ink);
+  text-align:center; font-size:13px; font-weight:500; padding:14px 16px;
+}
+
+/* ── MODAL RESULTADO ── */
+.overlay{
+  position:fixed; inset:0; z-index:50; background:rgba(0,0,0,0.78);
+  backdrop-filter:blur(5px); -webkit-backdrop-filter:blur(5px);
+  display:none; align-items:center; justify-content:center; padding:20px;
+}
+.overlay.open{ display:flex; }
+.modal{
+  background:var(--card);
+  border:2px solid var(--gold); border-radius:18px;
+  padding:34px 28px; max-width:420px; width:100%; text-align:center;
+  animation:pop .28s cubic-bezier(.2,.9,.3,1.2);
+  box-shadow:0 24px 70px rgba(0,0,0,0.6);
+}
+@keyframes pop{ from{ opacity:0; transform:translateY(18px) scale(.96); } to{ opacity:1; transform:none; } }
+.modal .win-label{
+  font-family:'DM Sans',sans-serif; font-weight:800; letter-spacing:-0.01em;
+  font-size:30px; line-height:1.15; color:var(--gold); margin:8px 0 6px;
+}
+.modal h3{ font-size:18px; font-weight:700; margin-bottom:6px; color:#FFFFFF; }
+.modal p{ color:var(--muted); font-size:14px; margin-bottom:24px; }
+.btn-claim{
+  width:100%; display:block; background:var(--green);
+  color:#FFFFFF; text-decoration:none; border:none; border-radius:var(--radius); padding:16px;
+  font-family:'Open Sans',sans-serif; font-size:15px; font-weight:700; cursor:pointer;
+  box-shadow:0 10px 26px rgba(34,203,95,0.35); transition:transform .08s;
+}
+.btn-claim:active{ transform:scale(0.985); }
+.btn-claim[hidden]{ display:none; }
+.aluna-choice[hidden]{ display:none; }
+.aluna-choice .aluna-pergunta{ font-size:13px; font-weight:700; color:var(--gold); margin-bottom:10px; }
+.aluna-choice .btn-claim{ margin-bottom:10px; background:var(--gold); color:var(--ink); box-shadow:0 10px 26px rgba(255,182,0,0.3); }
+.aluna-choice .btn-claim.btn-claim-alt{
+  background:var(--green); color:#FFFFFF; box-shadow:0 10px 26px rgba(34,203,95,0.35);
+}
+.btn-again{
+  width:100%; margin-top:12px; background:transparent; border:1px solid var(--border);
+  color:var(--muted); border-radius:var(--radius); padding:13px;
+  font-family:'Open Sans',sans-serif; font-size:14px; font-weight:600; cursor:pointer;
+  transition:border-color .2s, color .2s;
+}
+.btn-again:hover{ border-color:var(--gold); color:var(--gold); }
+.btn-again[hidden]{ display:none; }
+
+@media (prefers-reduced-motion: reduce){
+  .wheel{ transition:transform 1.2s ease-out; } * { animation:none !important; }
+}
+</style>
+</head>
+<body>
+
+  <div class="topbar">
+    <img class="foto" src="assets/foto-marcelia.png" alt="Marcelia Fernandes">
+    <img class="logo" src="assets/logo-dia-da-virada.png" alt="Dia da Virada da Coordenação Pedagógica">
+    <div><span class="badge-data">Dia <b>25 de Julho</b> das <b>09h às 17h</b></span></div>
+  </div>
+
+  <header class="hero">
+    <h1>Gire a roleta e garanta uma <em>condição exclusiva</em> na sua vaga</h1>
+    <p>Sua chance de viver o <strong>Dia da Virada da Coordenação Pedagógica</strong> com uma condição especial. Gire agora e descubra seu prêmio.</p>
+    <div class="chances"><span id="chances-txt">Você tem 1 chance. Gire agora.</span></div>
+  </header>
+
+  <div class="wheel-stage">
+    <div class="glow"></div>
+    <div class="pointer"></div>
+    <svg class="wheel no-anim" id="wheel" viewBox="0 0 300 300" aria-label="Roleta de prêmios"></svg>
+    <div class="hub"><img src="assets/logo-dia-da-virada.png" alt="Dia da Virada"></div>
+  </div>
+
+  <button class="btn-spin" id="btn-spin">GIRAR AGORA (<span id="left">1</span> tentativa)</button>
+
+  <p class="footnote">Os prêmios são condições promocionais por tempo limitado e válidos apenas durante esta ação. Vagas e preços sujeitos à disponibilidade.</p>
+
+  <section class="evento-sec">
+    <span class="eyebrow">Imersão ao vivo · Webinar online</span>
+    <h3>Saia da sobrecarga para o seu real papel, tendo segurança e respeito dos professores no 2º semestre.</h3>
+    <p>Para líderes pedagógicas: coordenação, supervisão, vice ou direção — com Marcelia Fernandes, do Midas da Educação.</p>
+    <a class="btn-info" href="https://www.midasdaeducacao.com.br/aviradacoordenacao" target="_blank" rel="noopener">
+      VER MAIS INFORMAÇÕES DO EVENTO
+    </a>
+  </section>
+
+  <div class="footer">Copyright © 2026 — Midas da Educação. Todos os direitos reservados.</div>
+
+  <!-- MODAL RESULTADO -->
+  <div class="overlay" id="overlay">
+    <div class="modal">
+      <div class="win-label" id="win-label">—</div>
+      <h3>Parabéns, você ganhou!</h3>
+      <p>Garanta agora antes que sua condição expire.</p>
+
+      <!-- prêmio de preço fixo: link único -->
+      <a class="btn-claim" id="btn-claim" href="#" hidden>RESGATAR MEU PRÊMIO</a>
+
+      <!-- prêmio com preço diferente para aluna/não aluna: pergunta antes do link (não usado nesta campanha) -->
+      <div class="aluna-choice" id="aluna-choice" hidden>
+        <p class="aluna-pergunta">Você já é aluna da Marcelia?</p>
+        <a class="btn-claim" id="btn-claim-aluna" href="#">Sou aluna — resgatar meu prêmio →</a>
+        <a class="btn-claim btn-claim-alt" id="btn-claim-naoaluna" href="#">Não sou aluna — resgatar meu prêmio →</a>
+      </div>
+
+      <button class="btn-again" id="btn-again">Girar de novo (<span id="again-left">2</span> restantes)</button>
+    </div>
+  </div>
+
+<!-- ════════════════════════════════════════════════
+     MOTOR DA ROLETA — idêntico ao do projeto da Gabriela.
+     Não precisa mexer aqui para trocar prêmios/cores.
+     ════════════════════════════════════════════════ -->
+<script>
+(function(){
+  "use strict";
+  var CFG = window.ROLETA_CONFIG;
+  var PREMIOS = CFG.PREMIOS, GOMOS = CFG.GOMOS, N = GOMOS.length;
+  var SEG = 360 / N;
+
+  // ── 1. Tracking (Pixel + GTM) opcional ──
+  function track(ev, data){
+    try { if (window.fbq) fbq('track', ev, data||{}); } catch(e){}
+    try { if (window.dataLayer) window.dataLayer.push(Object.assign({event:ev}, data||{})); } catch(e){}
+    try { if (window.gtag) window.gtag('event', ev, data||{}); } catch(e){}
+  }
+  (function initTracking(){
+    if (CFG.FB_PIXEL_ID){
+      !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+      n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}
+      (window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+      fbq('init', CFG.FB_PIXEL_ID); fbq('track','PageView');
+    }
+    if (CFG.GTM_ID){
+      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});
+      var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';
+      j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
+      f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer',CFG.GTM_ID);
+    }
+    if (CFG.GA4_ID){
+      var gtagScript = document.createElement('script');
+      gtagScript.async = true;
+      gtagScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + CFG.GA4_ID;
+      document.head.appendChild(gtagScript);
+      window.dataLayer = window.dataLayer || [];
+      window.gtag = function(){ window.dataLayer.push(arguments); };
+      window.gtag('js', new Date());
+      window.gtag('config', CFG.GA4_ID);
+    }
+  })();
+
+  // ── 2. Geometria — ângulo horário a partir do topo (0 = topo/ponteiro) ──
+  function pt(angDeg, r){
+    var a = angDeg * Math.PI/180;
+    return { x: 150 + r*Math.sin(a), y: 150 - r*Math.cos(a) };
+  }
+  function esc(s){ return String(s).replace(/[&<>]/g,function(m){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[m];}); }
+
+  // Parâmetros do desenho
+  var R_DISC = 149;   // raio externo (aro metálico)
+  var R_SEG  = 126;   // raio dos gomos (aro = 126..149)
+  var R_BULB = 137.5; // raio das bolinhas (no meio do aro)
+  var N_BULB = 16;    // qtd de bolinhas
+  var R_OUT  = 121;   // ponta externa dos rótulos
+  var SPAN   = 61.2;  // largura radial máx. de um rótulo
+  var BASE   = 11.7;  // fonte base (rótulos)
+  var FS_MIN = 6.5;   // fonte mínima
+
+  function drawWheel(){
+    var svg = document.getElementById('wheel'), parts = '';
+
+    // defs (gradientes — dourado #FFB600 e preto/carvão da marca)
+    parts +=
+      '<defs>'+
+        '<linearGradient id="gGold" x1="0.15" y1="0" x2="0.85" y2="1">'+
+          '<stop offset="0" stop-color="#FFD466"/><stop offset="0.5" stop-color="#FFB600"/><stop offset="1" stop-color="#A97800"/>'+
+        '</linearGradient>'+
+        '<linearGradient id="gDark" x1="0.15" y1="0" x2="0.85" y2="1">'+
+          '<stop offset="0" stop-color="#333333"/><stop offset="0.5" stop-color="#1c1c1c"/><stop offset="1" stop-color="#000000"/>'+
+        '</linearGradient>'+
+        '<radialGradient id="gRim" cx="0.5" cy="0.38" r="0.62">'+
+          '<stop offset="0" stop-color="#8a6b22"/><stop offset="0.5" stop-color="#3c2d12"/><stop offset="1" stop-color="#151007"/>'+
+        '</radialGradient>'+
+        '<radialGradient id="gBulb" cx="0.4" cy="0.35" r="0.75">'+
+          '<stop offset="0" stop-color="#FFFBE8"/><stop offset="0.45" stop-color="#FFD466"/><stop offset="1" stop-color="#9C7A1E"/>'+
+        '</radialGradient>'+
+      '</defs>';
+
+    // aro metálico
+    parts += '<circle cx="150" cy="150" r="'+R_DISC+'" fill="url(#gRim)"/>';
+
+    // gomos
+    for (var i=0;i<N;i++){
+      var a0=i*SEG, a1=(i+1)*SEG;
+      var p0=pt(a0,R_SEG), p1=pt(a1,R_SEG);
+      var fillSeg = (i%2===0) ? 'url(#gGold)' : 'url(#gDark)';
+      parts += '<path d="M150,150 L'+p0.x.toFixed(2)+','+p0.y.toFixed(2)+
+               ' A'+R_SEG+','+R_SEG+' 0 0 1 '+p1.x.toFixed(2)+','+p1.y.toFixed(2)+' Z" '+
+               'fill="'+fillSeg+'" stroke="#7a5d18" stroke-width="1"/>';
+    }
+
+    // brilho metálico (sheen) no topo
+    parts += '<ellipse cx="150" cy="104" rx="120" ry="74" fill="#ffffff" opacity="0.07"/>';
+
+    // anel dourado separando gomos do aro
+    parts += '<circle cx="150" cy="150" r="'+R_SEG+'" fill="none" stroke="#C9A33A" stroke-width="2.5"/>';
+
+    // bolinhas (luzes)
+    for (var b=0;b<N_BULB;b++){
+      var bp = pt(b*(360/N_BULB), R_BULB);
+      parts += '<circle cx="'+bp.x.toFixed(2)+'" cy="'+bp.y.toFixed(2)+'" r="6.4" fill="#FFD466" opacity="0.30"/>'+
+               '<circle cx="'+bp.x.toFixed(2)+'" cy="'+bp.y.toFixed(2)+'" r="3.5" fill="url(#gBulb)" stroke="#6e5417" stroke-width="0.7"/>';
+    }
+
+    // borda externa (fio dourado)
+    parts += '<circle cx="150" cy="150" r="'+(R_DISC-0.8)+'" fill="none" stroke="#caa53d" stroke-width="1.4" opacity="0.7"/>';
+
+    // rótulos — linha única; quebra em 2 linhas (e reduz) o que não couber em SPAN
+    for (var j=0;j<N;j++){
+      var mid = j*SEG + SEG/2, prm = PREMIOS[GOMOS[j]];
+      var lines = wrap(prm.gomoLabel || prm.label), t;
+      var widest = 0; for (t=0;t<lines.length;t++) widest = Math.max(widest, measure(lines[t], 100));
+      var fs = Math.min(BASE, 100 * SPAN / widest);
+      if (lines.length > 1) fs = Math.min(fs, BASE * 0.84);
+      if (fs < FS_MIN){
+        fs = FS_MIN;
+        lines = lines.map(function(l){ return truncate(l, fs, SPAN); });
+      }
+      var Lw = 0; for (t=0;t<lines.length;t++) Lw = Math.max(Lw, measure(lines[t], fs));
+      var p = pt(mid, R_OUT - Lw/2);
+      var fill = (j%2===0) ? '#1c1c1c' : '#FFD466';          // gomo dourado→preto, escuro→dourado
+      var inner = (lines.length > 1)
+        ? '<tspan x="'+p.x.toFixed(2)+'" dy="-0.56em">'+esc(lines[0])+'</tspan>'+
+          '<tspan x="'+p.x.toFixed(2)+'" dy="1.12em">'+esc(lines[1])+'</tspan>'
+        : esc(lines[0]);
+      parts += '<text x="'+p.x.toFixed(2)+'" y="'+p.y.toFixed(2)+'" '+
+               'fill="'+fill+'" font-family="Roboto,sans-serif" font-weight="700" font-size="'+fs.toFixed(2)+'" '+
+               'letter-spacing="0.2" text-anchor="middle" dominant-baseline="middle" '+
+               'transform="rotate('+mid.toFixed(2)+','+p.x.toFixed(2)+','+p.y.toFixed(2)+')">'+
+               inner+'</text>';
+    }
+
+    svg.innerHTML = parts;
+  }
+
+  // Mede o texto via canvas (confiável; getComputedTextLength às vezes retorna 0).
+  var measureCtx = document.createElement('canvas').getContext('2d');
+  function measure(text, fs){ measureCtx.font = '700 '+fs+'px Roboto, sans-serif'; return measureCtx.measureText(text).width || 1; }
+
+  // Quebra em 2 linhas (no espaço central) quando não cabe em 1 linha dentro de SPAN.
+  function wrap(text){
+    if (measure(text, 14) <= SPAN) return [text];
+    var sp = [], idx = text.indexOf(' ');
+    while (idx > -1){ sp.push(idx); idx = text.indexOf(' ', idx+1); }
+    if (!sp.length) return [text];
+    var m = text.length/2, best = sp[0];
+    for (var k=0;k<sp.length;k++) if (Math.abs(sp[k]-m) < Math.abs(best-m)) best = sp[k];
+    return [text.slice(0, best), text.slice(best+1)];
+  }
+
+  // Corta com reticências até caber em maxW no tamanho fs.
+  function truncate(text, fs, maxW){
+    if (measure(text, fs) <= maxW) return text;
+    var t = text;
+    while (t.length > 1 && measure(t + '…', fs) > maxW) t = t.slice(0, -1);
+    return t + '…';
+  }
+
+  // ── 3. Sorteio direcionado por peso ──
+  function sortearGomo(){
+    var total = 0, k;
+    for (k in PREMIOS) total += PREMIOS[k].peso;
+    var rnd = Math.random()*total, acc = 0, escolhido = null;
+    for (k in PREMIOS){ acc += PREMIOS[k].peso; if (rnd <= acc){ escolhido = k; break; } }
+    var idxs = []; for (var i=0;i<N;i++) if (GOMOS[i]===escolhido) idxs.push(i);
+    return idxs[Math.floor(Math.random()*idxs.length)];
+  }
+
+  // ── 4. Estado e giro ──
+  var tentativasTotais = CFG.TENTATIVAS || 3;
+  var usadas = 0, girando = false, rotAcc = 0, melhor = null;
+
+  var elWheel = document.getElementById('wheel');
+  var btnSpin = document.getElementById('btn-spin');
+  var elLeft = document.getElementById('left');
+  var overlay = document.getElementById('overlay');
+  var btnAgain = document.getElementById('btn-again');
+  var btnClaim = document.getElementById('btn-claim');
+  var alunaChoice = document.getElementById('aluna-choice');
+  var btnClaimAluna = document.getElementById('btn-claim-aluna');
+  var btnClaimNaoAluna = document.getElementById('btn-claim-naoaluna');
+
+  function restantes(){ return tentativasTotais - usadas; }
+  function chanceTxt(n){ return n + (n === 1 ? ' chance' : ' chances'); }
+
+  function girar(){
+    if (girando || restantes() <= 0) return;
+    girando = true; usadas++;
+    btnSpin.disabled = true;
+    overlay.classList.remove('open');
+
+    var gomo = sortearGomo();
+    var key = GOMOS[gomo], centro = gomo*SEG + SEG/2;
+    var alvo = (360 - (centro % 360)) % 360;
+    var jitter = (Math.random()-0.5) * (SEG*0.5);
+    var voltas = 6;
+    rotAcc += voltas*360 + (alvo - (rotAcc % 360) + 360) % 360 + jitter;
+
+    elWheel.classList.remove('no-anim');
+    elWheel.style.transform = 'rotate(' + rotAcc + 'deg)';
+
+    track('SpinWheel', { tentativa: usadas });
+
+    setTimeout(function(){
+      girando = false;
+      if (!melhor || PREMIOS[key].rank > PREMIOS[melhor.key].rank){
+        melhor = { key:key, gomo:gomo };
+      }
+      mostrarResultado();
+    }, 5300);
+  }
+
+  function mostrarResultado(){
+    var prm = PREMIOS[melhor.key];
+    document.getElementById('win-label').textContent = prm.label;
+
+    if (prm.checkoutAluna || prm.checkoutNaoAluna){
+      btnClaim.hidden = true;
+      alunaChoice.hidden = false;
+      btnClaimAluna.href = montarDestino(prm.checkoutAluna);
+      btnClaimNaoAluna.href = montarDestino(prm.checkoutNaoAluna);
+    } else {
+      alunaChoice.hidden = true;
+      btnClaim.hidden = false;
+      btnClaim.href = montarDestino(prm.checkout);
+    }
+
+    elLeft.textContent = restantes();
+    btnSpin.disabled = restantes() <= 0;
+
+    if (restantes() > 0){
+      btnAgain.hidden = false;
+      document.getElementById('again-left').textContent = restantes();
+    } else {
+      btnAgain.hidden = true;
+    }
+    document.getElementById('chances-txt').textContent =
+      restantes() > 0 ? ('Você ainda tem ' + chanceTxt(restantes()) + '.') : 'Tentativas encerradas.';
+    overlay.classList.add('open');
+    track('SpinResult', { premio: melhor.key, label: prm.label });
+  }
+
+  // ── 5. Destino: mantém o sck do prêmio e repassa só os UTMs do anúncio ──
+  function montarDestino(base){
+    if (!base) return '#';
+    var inc = new URLSearchParams(window.location.search);
+    inc.delete('sck'); inc.delete('src');
+    var extra = inc.toString();
+    if (!extra) return base;
+    return base + (base.indexOf('?') >= 0 ? '&' : '?') + extra;
+  }
+
+  // ── 6. Eventos ──
+  btnSpin.addEventListener('click', girar);
+  btnAgain.addEventListener('click', function(){ overlay.classList.remove('open'); girar(); });
+  btnClaim.addEventListener('click', function(e){
+    if (btnClaim.getAttribute('href') === '#'){ e.preventDefault(); return; }
+    track('ClaimPrize', { premio: melhor.key });
+  });
+  btnClaimAluna.addEventListener('click', function(e){
+    if (btnClaimAluna.getAttribute('href') === '#'){ e.preventDefault(); return; }
+    track('ClaimPrize', { premio: melhor.key, aluna: true });
+  });
+  btnClaimNaoAluna.addEventListener('click', function(e){
+    if (btnClaimNaoAluna.getAttribute('href') === '#'){ e.preventDefault(); return; }
+    track('ClaimPrize', { premio: melhor.key, aluna: false });
+  });
+
+  // ── init ──
+  drawWheel();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(drawWheel);
+  elLeft.textContent = restantes();
+  document.getElementById('chances-txt').textContent = 'Você tem ' + chanceTxt(restantes()) + '. Gire agora.';
+})();
+</script>
+</body>
+</html>
