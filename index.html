@@ -532,22 +532,20 @@ body{
     track('SpinResult', { premio: melhor.key, label: prm.label });
   }
 
-  // ── 5. Destino: repassa as UTMs e o src do anúncio para o checkout ──
-  // A página recebe do anúncio: utm_source={{site_source_name}}&utm_medium={{adset.name}}&
-  // utm_campaign={{campaign.name}}&utm_content={{ad.name}}&utm_term={{placement}}&
-  // src={{site_source_name}}|{{campaign.name}}|{{adset.name}}|{{ad.name}}|{{placement}}
-  var PARAMS_REPASSE = ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','src'];
+  // ── 5. Destino: repassa TODOS os parâmetros da URL para o checkout ──
+  // Repasse dinâmico: qualquer parâmetro que chegar na página (utm_*, src, sck, ref etc.)
+  // é carregado para o link do checkout no clique. Nada é fixo — se a página recebe
+  // utm_source=teste, o checkout recebe utm_source=teste. Parâmetros que já existem
+  // no link base do prêmio (ex.: off, checkoutMode) nunca são sobrescritos.
   function montarDestino(base){
     if (!base) return '#';
     var inc = new URLSearchParams(window.location.search);
-    var out = new URLSearchParams();
-    PARAMS_REPASSE.forEach(function(p){
-      var v = inc.get(p);
-      if (v !== null && v !== '') out.set(p, v);
+    var url;
+    try { url = new URL(base); } catch (e) { return base; }
+    inc.forEach(function(v, p){
+      if (v !== '' && !url.searchParams.has(p)) url.searchParams.set(p, v);
     });
-    var extra = out.toString();
-    if (!extra) return base;
-    return base + (base.indexOf('?') >= 0 ? '&' : '?') + extra;
+    return url.toString();
   }
 
   // ── 6. Eventos ──
