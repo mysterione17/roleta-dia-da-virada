@@ -46,19 +46,20 @@ window.ROLETA_CONFIG = {
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root{
-  /* ── CORES DA MARCA — extraídas de midasdaeducacao.com.br/aviradacoordenacao ── */
+  /* ── CORES DA MARCA — extraídas de midasdaeducacao.com.br/aviradacoordenacao (tema claro) ── */
   --gold:#FFB600; --gold-dk:#B67F00; --gold-lt:#FFD466;
-  --black:#000000; --card:#171717; --ink:#242424;
+  --gold-ink:#C9931B;                 /* dourado p/ texto sobre fundo claro */
+  --card:#F5F5F5; --ink:#242424; --navy:#222A35;
   --green:#22CB5F;
-  --bg:#0B0B0B;
-  --border:rgba(255,255,255,0.14);
-  --text:#FFFFFF; --muted:rgba(255,255,255,0.65);
+  --bg:#FFFFFF;
+  --border:rgba(0,0,0,0.12);
+  --text:#1A1A1A; --muted:rgba(0,0,0,0.62);
   --radius:14px;
 }
 html{ scroll-behavior:smooth; }
 body{
   background:
-    radial-gradient(ellipse 90% 46% at 50% -6%, rgba(255,182,0,0.20), rgba(255,182,0,0) 62%),
+    radial-gradient(ellipse 90% 40% at 50% -6%, rgba(255,182,0,0.10), rgba(255,182,0,0) 62%),
     var(--bg);
   color:var(--text); font-family:'Roboto',sans-serif; line-height:1.55;
   -webkit-font-smoothing:antialiased; min-height:100vh;
@@ -67,11 +68,10 @@ body{
 }
 .topbar{ margin-bottom:6px; text-align:center; }
 .topbar .foto{ width:200px; height:auto; display:block; margin:0 auto; }
-.topbar .logo{ width:190px; height:auto; display:block; margin:2px auto 0;
-  filter:drop-shadow(0 2px 6px rgba(0,0,0,0.6)); }
+.topbar .logo{ width:190px; height:auto; display:block; margin:2px auto 0; }
 .badge-data{
-  display:inline-block; margin-top:10px; background:var(--card); color:var(--text);
-  border:1px solid rgba(255,182,0,0.45); border-radius:6px;
+  display:inline-block; margin-top:10px; background:var(--navy); color:#FFFFFF;
+  border-radius:6px;
   font-size:13px; font-weight:700; padding:6px 14px; letter-spacing:0.02em;
 }
 .badge-data b{ color:var(--gold); }
@@ -80,16 +80,16 @@ body{
   font-family:'Roboto',sans-serif; font-weight:900; letter-spacing:-0.01em;
   font-size:clamp(24px,5.2vw,36px); line-height:1.22; color:var(--text);
 }
-.hero h1 em{ font-style:normal; color:var(--gold); }
+.hero h1 em{ font-style:normal; color:var(--gold-ink); }
 .hero p{ color:var(--muted); font-weight:400; font-size:clamp(14px,2.4vw,16px); margin-top:12px; }
-.hero p strong{ color:var(--gold); font-weight:700; }
+.hero p strong{ color:var(--gold-ink); font-weight:700; }
 .chances{
   position:relative; z-index:5;
   display:inline-flex; align-items:center; gap:8px; margin-top:18px;
-  font-size:13px; font-weight:700; color:var(--gold);
-  background:var(--card); border:1px solid rgba(255,182,0,0.4);
+  font-size:13px; font-weight:700; color:var(--gold-ink);
+  background:#FFF6DF; border:1px solid rgba(255,182,0,0.55);
   border-radius:999px; padding:8px 16px;
-  box-shadow:0 2px 8px rgba(0,0,0,0.35);
+  box-shadow:0 2px 8px rgba(0,0,0,0.08);
 }
 
 /* ── ROLETA ── */
@@ -98,13 +98,13 @@ body{
 .glow{
   position:absolute; inset:-20%; z-index:0; border-radius:50%; pointer-events:none;
   background: radial-gradient(circle at 50% 50%,
-    rgba(255,182,0,0.34) 0%, rgba(255,182,0,0.16) 48%, rgba(255,182,0,0.05) 66%, rgba(255,182,0,0) 78%);
+    rgba(255,182,0,0.22) 0%, rgba(255,182,0,0.10) 48%, rgba(255,182,0,0.03) 66%, rgba(255,182,0,0) 78%);
   filter: blur(26px);
 }
 .pointer{
   position:absolute; top:-10px; left:50%; transform:translateX(-50%); z-index:6;
   width:0; height:0; border-left:17px solid transparent; border-right:17px solid transparent;
-  border-top:30px solid var(--ink); filter:drop-shadow(0 3px 4px rgba(0,0,0,0.55));
+  border-top:30px solid var(--ink); filter:drop-shadow(0 3px 4px rgba(0,0,0,0.3));
 }
 .pointer::after{
   content:''; position:absolute; top:-30px; left:-12px;
@@ -115,7 +115,7 @@ body{
   position:relative; z-index:1; width:100%; height:100%; display:block; border-radius:50%;
   transform:rotate(0deg);
   transition:transform 5.2s cubic-bezier(.17,.67,.18,1);
-  filter: drop-shadow(0 16px 34px rgba(0,0,0,0.55));
+  filter: drop-shadow(0 16px 34px rgba(0,0,0,0.28));
 }
 .wheel.no-anim{ transition:none; }
 .hub{
@@ -123,7 +123,7 @@ body{
   width:86px; height:86px; border-radius:50%;
   background:radial-gradient(circle at 38% 32%, #FFFDF4, #FFE9AE 58%, #FFB600 100%);
   border:3px solid var(--ink);
-  box-shadow:0 4px 14px rgba(0,0,0,0.5), inset 0 1px 3px rgba(255,255,255,0.7);
+  box-shadow:0 4px 14px rgba(0,0,0,0.3), inset 0 1px 3px rgba(255,255,255,0.7);
   display:flex; align-items:center; justify-content:center;
 }
 .hub img{ width:66px; height:auto; display:block; }
@@ -143,7 +143,7 @@ body{
 
 .footnote{ margin-top:22px; font-size:12px; color:var(--muted); text-align:center; max-width:420px; }
 
-/* ── QUEM TE ENSINA (foto sobre fundo dourado, como no site) ── */
+/* ── QUEM TE ENSINA (card claro com borda dourada) ── */
 .mentora-sec{
   margin:38px auto 0; width:min(92vw,560px);
   background:var(--card); border:2px solid var(--gold); border-radius:18px;
@@ -151,35 +151,17 @@ body{
 }
 .mentora-sec .foto-wrap{
   flex:0 0 40%; max-width:210px; border-radius:12px; overflow:hidden;
-  background:linear-gradient(160deg, var(--gold-lt), var(--gold) 55%, var(--gold-dk));
+  background:#FFFFFF; box-shadow:0 6px 18px rgba(0,0,0,0.10);
 }
 .mentora-sec .foto-wrap img{ width:100%; height:auto; display:block; }
-.mentora-sec .eyebrow{ font-size:11px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:var(--gold); }
-.mentora-sec h3{ font-family:'Roboto',sans-serif; font-weight:900; font-size:clamp(18px,3.6vw,22px); margin:6px 0 8px; color:#FFFFFF; }
+.mentora-sec .eyebrow{ font-size:11px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:var(--gold-ink); }
+.mentora-sec h3{ font-family:'Roboto',sans-serif; font-weight:900; font-size:clamp(18px,3.6vw,22px); margin:6px 0 8px; color:var(--text); }
 .mentora-sec p{ color:var(--muted); font-size:14px; }
-.mentora-sec p strong{ color:var(--gold); font-weight:700; }
+.mentora-sec p strong{ color:var(--gold-ink); font-weight:700; }
 @media (max-width:560px){
   .mentora-sec{ flex-direction:column; text-align:center; }
   .mentora-sec .foto-wrap{ flex-basis:auto; width:60%; }
 }
-
-/* ── FAIXA DO EVENTO (mesmo estilo do box escuro com borda dourada do site) ── */
-.evento-sec{
-  margin:38px auto 0; width:min(92vw,560px); text-align:center;
-  background:var(--card); border:2px solid var(--gold); border-radius:18px;
-  padding:26px 24px;
-}
-.evento-sec .eyebrow{ font-size:11px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:var(--gold); }
-.evento-sec h3{ font-family:'Roboto',sans-serif; font-weight:700; font-size:clamp(16px,3.4vw,20px); margin:8px 0 6px; color:#FFFFFF; }
-.evento-sec p{ color:var(--muted); font-size:14px; }
-.btn-info{
-  display:inline-block; margin-top:18px; text-decoration:none;
-  background:var(--gold); color:var(--ink); border-radius:6px;
-  padding:15px 30px; font-family:'Open Sans',sans-serif; font-size:15px; font-weight:700;
-  box-shadow:0 10px 26px rgba(255,182,0,0.28); transition:transform .08s, box-shadow .2s;
-}
-.btn-info:hover{ box-shadow:0 12px 30px rgba(255,182,0,0.45); }
-.btn-info:active{ transform:scale(0.985); }
 
 /* ── RODAPÉ (faixa dourada, igual ao site) ── */
 .footer{
@@ -189,24 +171,24 @@ body{
 
 /* ── MODAL RESULTADO ── */
 .overlay{
-  position:fixed; inset:0; z-index:50; background:rgba(0,0,0,0.78);
+  position:fixed; inset:0; z-index:50; background:rgba(0,0,0,0.55);
   backdrop-filter:blur(5px); -webkit-backdrop-filter:blur(5px);
   display:none; align-items:center; justify-content:center; padding:20px;
 }
 .overlay.open{ display:flex; }
 .modal{
-  background:var(--card);
+  background:#FFFFFF;
   border:2px solid var(--gold); border-radius:18px;
   padding:34px 28px; max-width:420px; width:100%; text-align:center;
   animation:pop .28s cubic-bezier(.2,.9,.3,1.2);
-  box-shadow:0 24px 70px rgba(0,0,0,0.6);
+  box-shadow:0 24px 70px rgba(0,0,0,0.35);
 }
 @keyframes pop{ from{ opacity:0; transform:translateY(18px) scale(.96); } to{ opacity:1; transform:none; } }
 .modal .win-label{
   font-family:'DM Sans',sans-serif; font-weight:800; letter-spacing:-0.01em;
-  font-size:30px; line-height:1.15; color:var(--gold); margin:8px 0 6px;
+  font-size:30px; line-height:1.15; color:var(--gold-ink); margin:8px 0 6px;
 }
-.modal h3{ font-size:18px; font-weight:700; margin-bottom:6px; color:#FFFFFF; }
+.modal h3{ font-size:18px; font-weight:700; margin-bottom:6px; color:var(--text); }
 .modal p{ color:var(--muted); font-size:14px; margin-bottom:24px; }
 .btn-claim{
   width:100%; display:block; background:var(--green);
@@ -217,7 +199,7 @@ body{
 .btn-claim:active{ transform:scale(0.985); }
 .btn-claim[hidden]{ display:none; }
 .aluna-choice[hidden]{ display:none; }
-.aluna-choice .aluna-pergunta{ font-size:13px; font-weight:700; color:var(--gold); margin-bottom:10px; }
+.aluna-choice .aluna-pergunta{ font-size:13px; font-weight:700; color:var(--gold-ink); margin-bottom:10px; }
 .aluna-choice .btn-claim{ margin-bottom:10px; background:var(--gold); color:var(--ink); box-shadow:0 10px 26px rgba(255,182,0,0.3); }
 .aluna-choice .btn-claim.btn-claim-alt{
   background:var(--green); color:#FFFFFF; box-shadow:0 10px 26px rgba(34,203,95,0.35);
@@ -228,7 +210,7 @@ body{
   font-family:'Open Sans',sans-serif; font-size:14px; font-weight:600; cursor:pointer;
   transition:border-color .2s, color .2s;
 }
-.btn-again:hover{ border-color:var(--gold); color:var(--gold); }
+.btn-again:hover{ border-color:var(--gold); color:var(--gold-ink); }
 .btn-again[hidden]{ display:none; }
 
 @media (prefers-reduced-motion: reduce){
@@ -272,15 +254,6 @@ body{
       <h3>Marcelia Fernandes</h3>
       <p>Em <strong>21 anos formando coordenadoras</strong>, Marcelia identificou o que separa a coordenadora sobrecarregada da coordenadora respeitada e transformou isso num <strong>método reconhecido pelo MEC</strong>.</p>
     </div>
-  </section>
-
-  <section class="evento-sec">
-    <span class="eyebrow">Imersão ao vivo · Webinar online</span>
-    <h3>Saia da sobrecarga para o seu real papel, tendo segurança e respeito dos professores no 2º semestre.</h3>
-    <p>Para líderes pedagógicas: coordenação, supervisão, vice ou direção — com Marcelia Fernandes, do Midas da Educação.</p>
-    <a class="btn-info" href="https://www.midasdaeducacao.com.br/aviradacoordenacao" target="_blank" rel="noopener">
-      VER MAIS INFORMAÇÕES DO EVENTO
-    </a>
   </section>
 
   <div class="footer">Copyright © 2026 — Midas da Educação. Todos os direitos reservados.</div>
@@ -376,8 +349,8 @@ body{
         '<linearGradient id="gGold" x1="0.15" y1="0" x2="0.85" y2="1">'+
           '<stop offset="0" stop-color="#FFD466"/><stop offset="0.5" stop-color="#FFB600"/><stop offset="1" stop-color="#A97800"/>'+
         '</linearGradient>'+
-        '<linearGradient id="gDark" x1="0.15" y1="0" x2="0.85" y2="1">'+
-          '<stop offset="0" stop-color="#333333"/><stop offset="0.5" stop-color="#1c1c1c"/><stop offset="1" stop-color="#000000"/>'+
+        '<linearGradient id="gWhite" x1="0.15" y1="0" x2="0.85" y2="1">'+
+          '<stop offset="0" stop-color="#FFFFFF"/><stop offset="0.55" stop-color="#FBF6EA"/><stop offset="1" stop-color="#EFE4C8"/>'+
         '</linearGradient>'+
         '<radialGradient id="gRim" cx="0.5" cy="0.38" r="0.62">'+
           '<stop offset="0" stop-color="#8a6b22"/><stop offset="0.5" stop-color="#3c2d12"/><stop offset="1" stop-color="#151007"/>'+
@@ -394,7 +367,7 @@ body{
     for (var i=0;i<N;i++){
       var a0=i*SEG, a1=(i+1)*SEG;
       var p0=pt(a0,R_SEG), p1=pt(a1,R_SEG);
-      var fillSeg = (i%2===0) ? 'url(#gGold)' : 'url(#gDark)';
+      var fillSeg = (i%2===0) ? 'url(#gGold)' : 'url(#gWhite)';
       parts += '<path d="M150,150 L'+p0.x.toFixed(2)+','+p0.y.toFixed(2)+
                ' A'+R_SEG+','+R_SEG+' 0 0 1 '+p1.x.toFixed(2)+','+p1.y.toFixed(2)+' Z" '+
                'fill="'+fillSeg+'" stroke="#7a5d18" stroke-width="1"/>';
@@ -429,7 +402,7 @@ body{
       }
       var Lw = 0; for (t=0;t<lines.length;t++) Lw = Math.max(Lw, measure(lines[t], fs));
       var p = pt(mid, R_OUT - Lw/2);
-      var fill = (j%2===0) ? '#1c1c1c' : '#FFD466';          // gomo dourado→preto, escuro→dourado
+      var fill = (j%2===0) ? '#242424' : '#9C7500';          // gomo dourado→escuro, branco→dourado-escuro
       var inner = (lines.length > 1)
         ? '<tspan x="'+p.x.toFixed(2)+'" dy="-0.56em">'+esc(lines[0])+'</tspan>'+
           '<tspan x="'+p.x.toFixed(2)+'" dy="1.12em">'+esc(lines[1])+'</tspan>'
