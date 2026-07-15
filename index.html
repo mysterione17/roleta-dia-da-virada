@@ -30,11 +30,11 @@ window.ROLETA_CONFIG = {
   // label = texto completo (modal de resultado) | gomoLabel = versão curta no gomo (opcional)
   // checkout = link do prêmio (checkout Hotmart; as UTMs do anúncio são repassadas automaticamente)
   PREMIOS: {
-    cinquentaOff: { label: 'INGRESSO COM 50% DE DESCONTO', gomoLabel: '50% OFF', peso: 45, rank: 1,
+    cinquentaOff: { label: 'INGRESSO COM 50% DE DESCONTO', gomoLabel: '50% OFF', peso: 50, rank: 1,
                     checkout: 'https://pay.hotmart.com/Y106465997B?off=1u4rmlqj&checkoutMode=10' },
-    doisPorUm:    { label: 'INGRESSO 2 POR 1', gomoLabel: '2 POR 1', peso: 35, rank: 2,
+    doisPorUm:    { label: 'INGRESSO 2 POR 1', gomoLabel: '2 POR 1', peso: 0, rank: 2,   // aparece na roleta, mas nunca é sorteado
                     checkout: 'https://pay.hotmart.com/Y106465997B?off=wvi454o7&checkoutMode=10' },
-    umReal:       { label: 'INGRESSO POR R$ 1', gomoLabel: 'INGRESSO R$ 1', peso: 20, rank: 3,
+    umReal:       { label: 'INGRESSO POR R$ 1', gomoLabel: 'INGRESSO R$ 1', peso: 50, rank: 3,
                     checkout: 'https://pay.hotmart.com/Y106465997B?off=ydruh3h5&checkoutMode=10' }
   },
 
